@@ -14,7 +14,8 @@ Requirements:
 
 How to Run the code: 
 
-- Execute the Main.java file which presents a menu for the required operations.
+- Execute the Main.java file from IDE or using gradlew run
+  which presents a menu for the required operations.
 - Provide the input from the keyboard as prompted.
 
 
