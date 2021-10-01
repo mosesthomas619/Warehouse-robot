@@ -13,15 +13,19 @@ public class RobotOperations {
 
         while (!quit) {
             System.out.println(
-                    "\n\nWarehouse robot Menu: " + "\n" + "--------------------\n" +
+                    "\nWarehouse robot Menu: " + "\n" + "--------------------\n" +
+                            "press 0 -> Get current position of the robot in the grid" + "\n" +
                             "press 1 -> move the robot - Allowed options are N/S/W/E" + "\n" +
                             "press 2 -> Grab/Drop the crate - Allowed options are G/D" + "\n" +
-                            "press 3 -> quit"+ "\n\n" + "Please enter your choice: ");
-            int choice = scanner.nextInt();
+                            "press 3 -> Get current position of crates in the grid" + "\n" +
+                            "press 4 -> quit"+ "\n\n" + "Please enter your choice: ");
+            String choice = scanner.nextLine();
             switch (choice) {
-                case 1 : moveInTheGrid(); break;
-                case 2 : workWithCrate(); break;
-                case 3 : {
+                case "0" : System.out.println(robotWarehouse.getCurrentPosition()); break;
+                case "1" : moveInTheGrid(); break;
+                case "2" : workWithCrate(); break;
+                case "3" : robotWarehouse.getCurrentCratePosition(); break;
+                case "4" : {
                     quit = true;
                     System.out.println("Robot shut down!");
                     scanner.close();
@@ -45,7 +49,7 @@ public class RobotOperations {
 
     private void workWithCrate() {
         System.out.println("Press G to grab a crate or D to drop it");
-        String command = scanner.nextLine();
+        char command = scanner.next().charAt(0);
         robotWarehouse.crateOperations(command);
     }
 }

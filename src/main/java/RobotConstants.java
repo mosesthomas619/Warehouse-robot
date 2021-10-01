@@ -9,8 +9,8 @@ public class RobotConstants {
 
     public static final char WEST = 'W';
 
-    public static final String GRAB = "G";
+    public static final char GRAB = 'G';
 
-    public static final String DROP = "D";
+    public static final char DROP = 'D';
 
 }
