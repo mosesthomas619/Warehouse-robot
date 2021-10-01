@@ -18,7 +18,7 @@ How to Run the code:
 - Provide the input from the keyboard as prompted.
 
 
-PS: Both stages 1 & 2 is completed as part of the requirement and it took around 2-3 hours 
+PS: Both stages 1 & 2 is completed as part of the requirement and it took around 4-5 hours 
     for the completion.
 
 
