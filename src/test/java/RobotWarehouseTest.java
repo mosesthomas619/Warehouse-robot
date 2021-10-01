@@ -1,4 +1,4 @@
-import exception.MovingOutOfGridException;
+import exception.OutOfBoundaryException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,9 +33,9 @@ public class RobotWarehouseTest {
     @Test
     public void testIfExceptionIsThrownWhenRobotMovesOutOfGrid() throws Exception {
 
-        Exception exception = Assertions.assertThrows(MovingOutOfGridException.class, () -> robotWarehouse.incrementAxis(9, 0, 10));
+        Exception exception = Assertions.assertThrows(OutOfBoundaryException.class, () -> robotWarehouse.moveEastOrSouthAlongAxis(9));
 
-        String expectedMessage = "Trying to move out of the grid, robot moved to initial place (9,0)";
+        String expectedMessage = "Cannot move out of the grid";
         String actualMessage = exception.getMessage();
 
         assertTrue(actualMessage.contains(expectedMessage));

@@ -1,5 +1,5 @@
 import exception.InvalidDataException;
-import exception.MovingOutOfGridException;
+import exception.OutOfBoundaryException;
 
 
  /* xAxis - denotes North/south movement
@@ -17,6 +17,26 @@ public class RobotWarehouse {
 
     boolean[][] crateGrid = new boolean[10][10];
 
+     RobotWarehouse() {
+         crateGrid[5][4] = true;   // one crate placed at the centre
+         crateGrid[0][9] = true;   // one crate placed in the northeast corner
+     }
+
+     String getCurrentPosition() {
+        return "The robot is at the position (" + xAxis + "," + yAxis + ") on the grid at the moment.";
+     }
+
+     void getCurrentCratePosition() {
+
+         System.out.println("Current co-ordinates of the crates: ");
+         for(int i=0; i < crateGrid.length; i++) {
+             for(int j=0; j < crateGrid[i].length; j++) {
+                 if(crateGrid[i][j]) {
+                     System.out.println("(" + i +"," + j +")");
+                 }
+             }
+         }
+     }
 
 
     //takes direction from the user and moves accordingly
@@ -27,10 +47,10 @@ public class RobotWarehouse {
 
         for (char direction : directions) {
             switch (direction) {
-                case RobotConstants.NORTH : xAxis = decrementAxis(x, y, xAxis); break;
-                case RobotConstants.EAST : yAxis = incrementAxis(x, y, yAxis); break;
-                case RobotConstants.SOUTH : xAxis = incrementAxis(x, y, xAxis); break;
-                case RobotConstants.WEST : yAxis = decrementAxis(x, y, yAxis); break;
+                case RobotConstants.NORTH : xAxis = moveWestOrNorthAlongAxis(xAxis); break;
+                case RobotConstants.EAST : yAxis = moveEastOrSouthAlongAxis(yAxis); break;
+                case RobotConstants.SOUTH : xAxis = moveEastOrSouthAlongAxis(xAxis); break;
+                case RobotConstants.WEST : yAxis = moveWestOrNorthAlongAxis(yAxis); break;
                 default : throw new InvalidDataException("Invalid Input");
             }
         }
@@ -45,43 +65,33 @@ public class RobotWarehouse {
     }
 
     /*
-      Increment Axis function increments the axis when robot moves towards south and East
-      x  - retains the original value of xAxis
-      y - retains the original value of yAxis
+      moveEastOrSouthAlongAxis function increments the axis when robot moves towards south and East
       axis - parameter to increment
      */
-    public int incrementAxis(int x, int y, int axis) throws Exception {
-        axis++;
-        if (axis > 9) {
-            xAxis = x;
-            yAxis = y;
-            throw new MovingOutOfGridException("Trying to move out of the grid, robot moved to initial place (" + x + "," + y + ")");
+    public int moveEastOrSouthAlongAxis(int axis) throws Exception {
+        if ((axis + 1) > 9) {
+            throw new OutOfBoundaryException("Cannot move out of the grid!");
         }
+        axis++;
         return axis;
     }
 
     /*
-      Decrement Axis function decrements the axis when the robot moves towards north and West
-      x - retains the original value of xAxis
-      y - retains the original value of yAxis
+      moveWestOrNorthAlongAxis function decrements the axis when the robot moves towards north and West
       axis - parameter to decrement
      */
-    public int decrementAxis(int x, int y, int axis) throws Exception {
-        axis--;
-        if (axis < 0) {
-            xAxis = x;
-            yAxis = y;
-            throw new MovingOutOfGridException("Trying to move out of the grid, robot moved to initial place (" + x + "," + y + ")");
+    public int moveWestOrNorthAlongAxis(int axis) throws Exception {
+        if ((axis-1) < 0) {
+            throw new OutOfBoundaryException("Cannot move out of the grid!");
         }
+        axis--;
         return axis;
     }
 
 
 
     //chooses to pick or drop the crate based on the user input
-    public void crateOperations(String input) {
-        crateGrid[5][4] = true;   // one crate placed at the centre
-        crateGrid[0][9] = true;   // one crate placed in the northeast corner
+    public void crateOperations(char input) {
         switch (input) {
             case RobotConstants.GRAB: grabCrate(); break;
             case RobotConstants.DROP: dropCrate(); break;
